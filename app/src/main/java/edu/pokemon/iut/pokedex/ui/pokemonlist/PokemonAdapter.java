@@ -52,14 +52,18 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         /* Mapping of the data into the view*/
         Pokemon pokemon = dataSet.get(position);
 
-        // TODO 5) RECUPERER VIA LE HOLDER LA TEXTVIEW
-        TextView txvtiew = holder.pokemonName;
-        ImageView pokemonImg = holder.pokemonImage;
+        holder.pokemonNumber.setText(context.getString(R.string.number, pokemon.getId()));
+        holder.pokemonName.setText(pokemon.getName());
 
-        // TODO 6) INSERER LE NOM DU POKEMON DANS LA TEXTVIEW
-        String urlImage = pokemon.getSpritesString();
-        txvtiew.setText(pokemon.getName());
-        Glide.with(context).load(urlImage).into(pokemonImg);
+        // BONUS IMAGE POKEMON ET PLACEHOLDER
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                .placeholder(R.drawable.ic_launcher_pokeball)
+                .centerCrop();
+        Glide.with(context)
+                .load(pokemon.getSpritesString())
+                .apply(options)
+                .into(holder.pokemonLogo);
     }
 
     @Override
@@ -84,18 +88,21 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
      * Inner ViewHolder for the Pokemon's view
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        //TODO 3) DECLARER ICI UNE VARIABLE POUR LA TEXTVIEW
         final TextView pokemonName;
-        final ImageView pokemonImage;
+        final TextView pokemonNumber;
+        final ImageView pokemonLogo;
+        final View pokemonLine;
+        final ImageView pokemonCapture;
+        final View pokemonCaptureShadow;
 
         ViewHolder(View v) {
             super(v);
-            //TODO 4) RECUPERER ICI UNE INSTANCE DE LA TEXTVIEW ET LA SAUVEGARGER DANS LA VARIABLE
             pokemonName = v.findViewById(R.id.tv_pokemon_name);
-            pokemonImage = v.findViewById(R.id.iv_pokemon_image);
-
+            pokemonNumber = v.findViewById(R.id.tv_pokemon_number);
+            pokemonLogo = v.findViewById(R.id.iv_pokemon_logo);
+            pokemonLine = v.findViewById(R.id.cl_pokemon_line);
+            pokemonCapture = v.findViewById(R.id.iv_pokemon_capture);
+            pokemonCaptureShadow = v.findViewById(R.id.cv_pokemon_capture);
         }
     }
-
 }
-
