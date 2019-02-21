@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
@@ -160,8 +161,12 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
     private void initView(Pokemon pokemon) {
         if(pokemon != null) {
             if (getContext() != null) {
+                RequestOptions options = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .placeholder(R.drawable.ic_block_black_24dp)
+                        .centerCrop();
                 // TODO 32) UTILISER GLIDE POUR TELECHARGER L'IMAGE DU POKEMON DANS L'IMAGEVIEW
-                Glide.with(this).load(pokemon.getSpritesString()).into(imagePokemon);
+                Glide.with(this).load(pokemon.getSpritesString()).apply(options).into(imagePokemon);
             }
 
             //If we can Navigate between pokemons we show his name on the actionBar, else we keep the default name
