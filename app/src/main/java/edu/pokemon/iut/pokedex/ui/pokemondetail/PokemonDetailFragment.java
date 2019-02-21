@@ -3,6 +3,8 @@ package edu.pokemon.iut.pokedex.ui.pokemondetail;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -73,8 +75,8 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
     @BindView(R.id.txtViewPoids)
     protected TextView txtViewPoids;
     // TODO 31) BINDER LA TEXTVIEW POUR LE TYPE DU POKEMON
-    @BindView(R.id.txtViewTypes)
-    protected TextView txtViewTypes;
+    @BindView(R.id.llTypePokemon)
+    protected LinearLayout llTypesPokemon;
 
     /* ATTRIBUTES */
     private int pokemonId;
@@ -174,21 +176,21 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
             txtViewTaille.setText(getString(R.string.height, pokemon.getHeight()));
 
             // TODO 35) UN POKEMON PEUT AVOIR PLUSIEURS TYPES, N'AFFICHER QUE LE PREMIER POUR LE MOMENT (BONUS SI VOUS AFFICHEZ TOUT LES TYPES D'UN POKEMON)
-            String types = "";
             for(Type unType : pokemon.getTypes()){
-                types.concat(unType.getType().getName().concat(" - "));
+                TextView txtViewType = new TextView(getContext());
+                txtViewType.setText(unType.getType().getName());
+                llTypesPokemon.addView(txtViewType);
             }
-            txtViewTypes.setText(types);
         }
     }
 
     @Override
     public void onSwipe(int direction) {
         // TODO 37) VERIFIER LA DIRECTION avec PokemonGestureListener.LEFT ou .RIGHT ET APPELER navigationManager POUR AFFICHER LE DETAIL DU POKEMON SUIVANT OU PRECEDENT
-        if(direction == PokemonGestureListener.LEFT){
+        if(direction == PokemonGestureListener.LEFT && pokemonId > 1){
             navigationManager.startPokemonDetail(pokemonId-1, true);
         }
-        else if (direction == PokemonGestureListener.RIGHT){
+        else if (direction == PokemonGestureListener.RIGHT && pokemonId < idMaxPokemon){
             navigationManager.startPokemonDetail(pokemonId+1, true);
         }
 
