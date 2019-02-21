@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,13 +52,29 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
     /* VIEWS */
     // TODO TOUT EST A FAIRE AVEC BUTTERKNIFE ET LES VUES SONT CELLES CREES DANS pokemon_detail_layout
     // TODO 24) BINDER LE CONSTRAINTLAYOUT GLOBAL
+    @BindView(R.id.cl_pokemon_detail)
+    protected ConstraintLayout clPokemonDetail;
     // TODO 25) BINDER L'IMAGEVIEW DE L'IMAGE DU POKEMON
+    @BindView(R.id.imagePokemon)
+    protected ImageView imagePokemon;
     // TODO 26) BINDER LA TEXTVIEW POUR LE NUMERO DU POKEMON
+    @BindView(R.id.txtViewNumPokemon)
+    protected TextView txtViewNumPokemon;
     // TODO 27) BINDER LA TEXTVIEW POUR LE NOM DU POKEMON
+    @BindView(R.id.txtViewNomPokemon)
+    protected TextView txtViewNomPokemon;
     // TODO 28) BINDER LA TEXTVIEW POUR L'EXP DE BASE DU POKEMON
+    @BindView(R.id.txtViewBaseEx)
+    protected TextView txtViewBaseEx;
     // TODO 29) BINDER LA TEXTVIEW POUR LA TAILLE DU POKEMON
+    @BindView(R.id.txtViewTaille)
+    protected TextView txtViewTaille;
     // TODO 30) BINDER LA TEXTVIEW POUR LE POIDS DU POKEMON
+    @BindView(R.id.txtViewPoids)
+    protected TextView txtViewPoids;
     // TODO 31) BINDER LA TEXTVIEW POUR LE TYPE DU POKEMON
+    @BindView(R.id.txtViewTypes)
+    protected TextView txtViewTypes;
 
     /* ATTRIBUTES */
     private int pokemonId;
@@ -73,8 +90,10 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
         PokemonDetailFragment pokemonDetailFragment = new PokemonDetailFragment();
 
         // TODO 14) INSTANCIER UN Bundle ET INSERER DEDANS LE pokemonId AVEC LA CLE KEY_POKEMON_ID
+        Bundle pokemonBundle = new Bundle();
+        pokemonBundle.putInt(KEY_POKEMON_ID, pokemonId);
         // TODO 15) SETTER COMME ARGUMENTS LE Bundle A pokemonDetailFragment
-
+        pokemonDetailFragment.setArguments(pokemonBundle);
         return pokemonDetailFragment;
     }
 
@@ -83,6 +102,7 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
         super.onAttach(context);
         if (getArguments() != null) {
             // TODO 16) RECUPERER DANS getArguments LE POKEMON ID AVEC LA CLE KEY_POKEMON_ID ET ENREGISTRER LE DANS this.pokemonId
+            this.pokemonId = getArguments().getInt(KEY_POKEMON_ID);
         }
     }
 
@@ -98,7 +118,8 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //TODO 13) RETOURNER LA VUE pokemon_detail_layout EN TANT QUE rootView (UTILISER inflater POUR inflate LA XML)
-        return null;
+        rootView = inflater.inflate(R.layout.pokemon_detail_layout,container,false);
+        return rootView;
     }
 
     @Override
@@ -110,6 +131,8 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
         //If we can show the navigation, we can then swipe between pokemons
         if (isNavigationShown) {
             // TODO 36) INSTANCIER UN PokemonGestureListener ET SETTER LE onTouchListener du CONSTRAINTLAYOUT GLOBAL DE pokemon_detail_layout AVEC
+            PokemonGestureListener pkListener = new PokemonGestureListener(this,null,getContext());
+            clPokemonDetail.setOnTouchListener(pkListener);
         }
 
         //Initialisation and observation of the ViewModel for this screen
@@ -136,6 +159,7 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
         if(pokemon != null) {
             if (getContext() != null) {
                 // TODO 32) UTILISER GLIDE POUR TELECHARGER L'IMAGE DU POKEMON DANS L'IMAGEVIEW
+                Glide.with(this).load(pokemon.getSpritesString()).into(imagePokemon);
             }
 
             //If we can Navigate between pokemons we show his name on the actionBar, else we keep the default name
@@ -143,13 +167,30 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
             setTitle(isNavigationShown ? pokemon.getName() : null);
 
             // TODO 34) POUR CHAQUE VUE ASSOCIER LA BONNE DONNEE (DES STRINGS SONT A DISPOSITION POUR CERTAINS CHAMPS PENSEZ A LES UTILISER)
+            txtViewNumPokemon.setText(getString(R.string.number, pokemon.getId()));
+            txtViewNomPokemon.setText(pokemon.getName());
+            txtViewBaseEx.setText(getString(R.string.exp,pokemon.getBaseExperience()));
+            txtViewPoids.setText(getString(R.string.weight, pokemon.getWeight()));
+            txtViewTaille.setText(getString(R.string.height, pokemon.getHeight()));
 
             // TODO 35) UN POKEMON PEUT AVOIR PLUSIEURS TYPES, N'AFFICHER QUE LE PREMIER POUR LE MOMENT (BONUS SI VOUS AFFICHEZ TOUT LES TYPES D'UN POKEMON)
+            String types = "";
+            for(Type unType : pokemon.getTypes()){
+                types.concat(unType.getType().getName().concat(" - "));
+            }
+            txtViewTypes.setText(types);
         }
     }
 
     @Override
     public void onSwipe(int direction) {
         // TODO 37) VERIFIER LA DIRECTION avec PokemonGestureListener.LEFT ou .RIGHT ET APPELER navigationManager POUR AFFICHER LE DETAIL DU POKEMON SUIVANT OU PRECEDENT
+        if(direction == PokemonGestureListener.LEFT){
+            navigationManager.startPokemonDetail(pokemonId-1, true);
+        }
+        else if (direction == PokemonGestureListener.RIGHT){
+            navigationManager.startPokemonDetail(pokemonId+1, true);
+        }
+
     }
 }

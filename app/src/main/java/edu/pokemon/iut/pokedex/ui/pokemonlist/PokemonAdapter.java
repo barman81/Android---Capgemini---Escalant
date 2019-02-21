@@ -64,6 +64,12 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
                 .load(pokemon.getSpritesString())
                 .apply(options)
                 .into(holder.pokemonLogo);
+        holder.pokemonLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigationManager.startPokemonDetail(pokemon.getId(),false);
+            }
+        });
     }
 
     @Override

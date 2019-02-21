@@ -9,16 +9,128 @@
     tools:ignore="Overdraw">
 
     <!-- TODO 1) INSERER UNE IMAGEVIEW POUR L'IMAGE DU POKEMON -->
+    <ImageView
+        android:id="@+id/imagePokemon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+
+
+
     <!-- TODO 2) INSERER UNE TEXTVIEW POUR LE NUMERO DU POKEMON -->
+    <TextView
+        android:id="@+id/txtViewNumPokemon"
+        android:layout_width="159dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="55dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imagePokemon" />
     <!-- TODO 3) INSERER UNE TEXTVIEW POUR LE NOM DU POKEMON -->
+
+    <TextView
+        android:id="@+id/txtViewNomPokemon"
+        android:layout_width="154dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="21dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewNumPokemon" />
     <!-- TODO 4) INSERER UN CONSTRAINTLAYOUT QUI CONTIENDRA LES DETAILS DU POKEMON -->
-    <!-- TODO 5) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'TYPES' -->
-    <!-- TODO 6) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LE TYPE DU POKEMON-->
-    <!-- TODO 7) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'BASE EXP' -->
-    <!-- TODO 8) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LA BASE D'EXP DU POKEMON-->
-    <!-- TODO 9) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'HT' -->
-    <!-- TODO 10) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LA TAILLE DU POKEMON-->
-    <!-- TODO 11) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'WT' -->
-    <!-- TODO 12) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LE POIDS DU POKEMON-->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_detailPokemon"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtViewNomPokemon">
+        <!-- TODO 5) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'TYPES' -->
+        <TextView
+            android:id="@+id/txtViewLibelleTypes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/types"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Types :" />
+        <!-- TODO 6) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LE TYPE DU POKEMON-->
+        <TextView
+            android:id="@+id/txtViewTypes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toEndOf="@+id/txtViewLibelleTypes"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="feu" />
+        <!-- TODO 7) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'BASE EXP' -->
+        <TextView
+            android:id="@+id/txtViewLibelleBaseExp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:text="@string/base_exp"
+            app:layout_constraintStart_toStartOf="@+id/txtViewLibelleTypes"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewLibelleTypes" />
+        <!-- TODO 8) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LA BASE D'EXP DU POKEMON-->
+        <TextView
+            android:id="@+id/txtViewBaseEx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="66dp"
+            app:layout_constraintStart_toEndOf="@+id/txtViewLibelleBaseExp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="0" />
+        <!-- TODO 9) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'HT' -->
+        <TextView
+            android:id="@+id/txtViewLibelleTaille"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="31dp"
+            android:text="@string/ht"
+            app:layout_constraintStart_toStartOf="@+id/txtViewLibelleTypes"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewLibelleBaseExp" />
+        <!-- TODO 10) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LA TAILLE DU POKEMON-->
+
+        <TextView
+            android:id="@+id/txtViewTaille"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="31dp"
+            android:text="110"
+            app:layout_constraintStart_toEndOf="@+id/txtViewLibelleTaille"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewLibelleBaseExp" />
+        <!-- TODO 11) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'WT' -->
+        <TextView
+            android:id="@+id/txtViewLibellePoids"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="@string/wt"
+            app:layout_constraintStart_toStartOf="@+id/txtViewLibelleTypes"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewLibelleTaille" />
+        <!-- TODO 12) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LE POIDS DU POKEMON-->
+        <TextView
+            android:id="@+id/txtViewPoids"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="34dp"
+            android:layout_marginTop="22dp"
+            android:text="80"
+            app:layout_constraintStart_toEndOf="@+id/txtViewLibellePoids"
+            app:layout_constraintTop_toBottomOf="@+id/txtViewTaille" />
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

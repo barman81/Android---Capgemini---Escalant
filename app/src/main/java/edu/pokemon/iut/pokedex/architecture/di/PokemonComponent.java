@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import edu.pokemon.iut.pokedex.architecture.BaseActivity;
 import edu.pokemon.iut.pokedex.architecture.BaseFragment;
+import edu.pokemon.iut.pokedex.ui.pokemondetail.PokemonDetailFragment;
 import edu.pokemon.iut.pokedex.ui.pokemonlist.PokemonListFragment;
 
 /**
@@ -21,5 +22,11 @@ public interface PokemonComponent {
 
     void inject(PokemonListFragment pokemonListFragment);
 
+
     // TODO 19) AJOUTER UNE METHODE inject POUR PokemonDetailFragment
+    void inject(PokemonDetailFragment pokemonDetailFragment);
+
+
+
+
 }
