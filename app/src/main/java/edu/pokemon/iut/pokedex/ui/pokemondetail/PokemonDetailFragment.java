@@ -163,10 +163,14 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
             if (getContext() != null) {
                 RequestOptions options = new RequestOptions()
                         .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                        .placeholder(R.drawable.ic_block_black_24dp)
+                        .placeholder(R.drawable.ic_encourschargement)
                         .centerCrop();
-                // TODO 32) UTILISER GLIDE POUR TELECHARGER L'IMAGE DU POKEMON DANS L'IMAGEVIEW
-                Glide.with(this).load(pokemon.getSpritesString()).apply(options).into(imagePokemon);
+                if(pokemon.getSpritesString() != null ){
+                    // TODO 32) UTILISER GLIDE POUR TELECHARGER L'IMAGE DU POKEMON DANS L'IMAGEVIEW
+                    Glide.with(this).load(pokemon.getSpritesString()).apply(options).into(imagePokemon);
+                }else{
+                    Glide.with(this).load(R.drawable.ic_imageabsente).apply(options).into(imagePokemon);
+                }
             }
 
             //If we can Navigate between pokemons we show his name on the actionBar, else we keep the default name
