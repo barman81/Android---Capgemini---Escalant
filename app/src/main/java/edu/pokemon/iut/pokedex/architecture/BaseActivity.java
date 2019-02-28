@@ -2,6 +2,8 @@ package edu.pokemon.iut.pokedex.architecture;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -27,7 +29,9 @@ import edu.pokemon.iut.pokedex.R;
 public class BaseActivity extends AppCompatActivity {
 
     //TODO 2) AJOUTER UNE CONSTANTE QUI SERVIRA DE CLE POUR RECUPERER LA DERNIERE RECHERCHE EFFECTUE
+    private static final String  KEY_DERNIERE_RECHERCHE = "KEY_DERNIERE_RECHERCHE";
     //TODO 3) AJOUTER UNE VARIABLE QUI STOCKERA LA DERNIERER RECHERCHE EFFECTUE
+    private static String derniereRecherche;
 
     @Inject
     protected NavigationManager navigationManager;
@@ -59,20 +63,57 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     //TODO 4) OVERRIDE LA METHOD onCreateOptionMenu
-    //TODO 5) DANS LA METHODE onCreateOptionMenu :
-    //TODO 6) RECUPERER LE MenuInflater ET inflate LE LAYOUT DU MENU SUR LE PARAMETRE menu
-    //TODO 7) GRACE AU PARAMETRE menu CHERCHER L'Item DE RECHERCHE ET SAUVEGARDER LE DANS UN MenuItem
-    //TODO 8) RECUPERER L'ActionView DEPUIS LE MenuItem ET SAUVEGARDER DANS UNE SearchView
-    //TODO 9) SUR LA SearchView VOUS ALLEZ setter UN LISTENER QUAND UNE REQUETE EST ECRITE
-    //TODO 10) DANS LE LISTENER VOUS ALLER POUVOIR RECUPERER LA REQUETE EST RELANCER L'AFFICHAGE DE LA LISTE DE POKEMON AVEC LA REQUETE
-    //TODO 11) N'OUBLIER PAS DE SAUVEGARDER LA REQUETE DANS LA VARIABLE DE CLASSE
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //TODO 5) DANS LA METHODE onCreateOptionMenu :
+        //TODO 6) RECUPERER LE MenuInflater ET inflate LE LAYOUT DU MENU SUR LE PARAMETRE menu
+        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
+        //TODO 7) GRACE AU PARAMETRE menu CHERCHER L'Item DE RECHERCHE ET SAUVEGARDER LE DANS UN MenuItem
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        //TODO 8) RECUPERER L'ActionView DEPUIS LE MenuItem ET SAUVEGARDER DANS UNE SearchView
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        //TODO 9) SUR LA SearchView VOUS ALLEZ setter UN LISTENER QUAND UNE REQUETE EST ECRITE
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
 
-    //TODO 12) RETOURNER A LA FIN DE LA METHODE super.onCreateOptionMenu(menu)
+            @Override
+            public boolean onQueryTextChange(String s) {
+                //TODO 10) DANS LE LISTENER VOUS ALLER POUVOIR RECUPERER LA REQUETE EST RELANCER L'AFFICHAGE DE LA LISTE DE POKEMON AVEC LA REQUETE
+                navigationManager.startPokemonList(null,s);
+                //TODO 11) N'OUBLIER PAS DE SAUVEGARDER LA REQUETE DANS LA VARIABLE DE CLASSE
+                derniereRecherche = s;
+                return false;
+            }
+        });
+        //TODO 12) RETOURNER A LA FIN DE LA METHODE super.onCreateOptionMenu(menu)
+        return super.onCreateOptionsMenu(menu);
+    }
+
 
     //TODO 17) OVERRIDE LA METHODE onSaveInstanceState
-    //TODO 18) DANS LA METHODE onSaveInstanceState SAUVEGARDER LA REQUETE EN COURS
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //TODO 18) DANS LA METHODE onSaveInstanceState SAUVEGARDER LA REQUETE EN COURS
+        outState.putString(KEY_DERNIERE_RECHERCHE, derniereRecherche);
+        super.onSaveInstanceState(outState);
+    }
+
+
 
     //TODO 19) OVERRIDE LA METHODE onRestoreInstanceState
-    //TODO 20) DANS LA METHODE onRestoreInstanceState RECUPERER LA REQUETE PRECEDEMMENT SAUVEGARDER LA DANS LA VARIABLE DE CLASSE
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+        //TODO 20) DANS LA METHODE onRestoreInstanceState RECUPERER LA REQUETE PRECEDEMMENT SAUVEGARDER LA DANS LA VARIABLE DE CLASSE
+        derniereRecherche = savedInstanceState.getString(KEY_DERNIERE_RECHERCHE);
+        super.onRestoreInstanceState(savedInstanceState, persistentState);
+    }
+
+
+
     //TODO 21) CERTAIN DES SOUCIS DEVRAIT ETRE REGLER MAIS IL RESTE ENCORE QUELQUE BUG : BONUS SI VOUS ARRIVEZ A LES CORRIGERS
 }

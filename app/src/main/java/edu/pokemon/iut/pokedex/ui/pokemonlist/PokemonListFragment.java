@@ -27,6 +27,7 @@ public class PokemonListFragment extends BaseFragment implements PokemonAdapter.
     private static final String TAG = PokemonListFragment.class.getSimpleName();
 
     //TODO 13) CREER UNE CONSTANTE QUI SERVIRA DE CLE POUR RECUPERER LA REQUETE RECU POUR FILTRER LA LISTE DE POKEMON
+    private static final String KEY_FILTRAGE = "KEY_FILTRAGE";
 
     /* VIEWS */
     @BindView(R.id.rv_pokemon_list)
@@ -45,6 +46,9 @@ public class PokemonListFragment extends BaseFragment implements PokemonAdapter.
         PokemonListFragment pokemonListFragment = new PokemonListFragment();
 
         //TODO 14) UTILISER UN BUNDLE POUR ENREGISTRER LA REQUETE 'query' ET PASSER LE EN ARGUMENTS AU FRAGEMENT
+        Bundle bundle = new Bundle();
+        bundle.putCharSequence(KEY_FILTRAGE, query);
+        pokemonListFragment.setArguments(bundle);
         return pokemonListFragment;
     }
 
@@ -91,7 +95,9 @@ public class PokemonListFragment extends BaseFragment implements PokemonAdapter.
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(PokemonListViewModel.class);
         CharSequence query = null;
         //TODO 15) RECUPERER DANS LES ARGUMENTS DU FRAGMENT LA REQUETE ENREGISTRER ET METTER LA DANS 'query'
+        query = getArguments().getCharSequence(KEY_FILTRAGE);
         //TODO 16) TESTER LA RECHERCHE ET DITE MOI CE QUI NE VAS PAS
+        // Apres une recherche si l'on change l'orientation du téléphone on garde le resultat de la recherche mais on perd notre recherche
         viewModel.init(query);
 
         viewModel.getPokemons().observe(this, pokemonList -> adapter.setData(pokemonList));
