@@ -109,12 +109,15 @@ public class PokemonListFragment extends BaseFragment implements PokemonAdapter.
         super.onResume();
         //TODO 32) BONUS FAITE REMONTER LA RECYCLER VIEW SUR LE DERNIER POKEMON CONSULTER
         //TODO 33) AIDER VOUS AVEC NavigationManater ET scrollToPosition DE LA RECYCLERVIEW
+        pokemonListView.scrollToPosition(navigationManager.getCurrentPokemon()-1);
     }
 
 
     @Override
     public void onCapture(Pokemon pokemon) {
         //TODO 24) AVEC LE viewModel LANCER LA CAPTURE DU POKEMON CLICKER
+        viewModel.capture(pokemon);
         //TODO 25) TESTER QUE LA POKEBALL CHANGE BIEN DE VIDE A PLEINE LORS DU CLICK (UNE CERTAINE LATENCE PEUT ETRE REMARQUER)
+
     }
 }

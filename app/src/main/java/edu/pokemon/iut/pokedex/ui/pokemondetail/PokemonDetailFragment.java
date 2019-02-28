@@ -3,12 +3,9 @@ package edu.pokemon.iut.pokedex.ui.pokemondetail;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import edu.pokemon.iut.pokedex.PokedexApp;
 import edu.pokemon.iut.pokedex.R;
 import edu.pokemon.iut.pokedex.architecture.BaseFragment;
-import edu.pokemon.iut.pokedex.architecture.NavigationManager;
 import edu.pokemon.iut.pokedex.architecture.listener.PokemonGestureListener;
 import edu.pokemon.iut.pokedex.data.model.Pokemon;
 import edu.pokemon.iut.pokedex.data.model.Type;
@@ -67,6 +56,8 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
     protected LinearLayout linearLayoutPokemonTypes;
 
     //TODO 27) BINDER LA POKEBALL RAJOUTER SUR LE LAYOUT VIA LE CIRCLEVIEW
+    @BindView(R.id.iv_pokemon_capture_detail)
+    protected ImageView iv_detail;
 
     /* ATTRIBUTES */
     private int pokemonId;
@@ -130,7 +121,7 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
         viewModel.init(this.pokemonId);
         //Once we get the pokemon from the ViewModel or if he is updated we call initView
         //TODO 28) PASSER LE VIEWMODEL EN PARAMETRE DE initView
-        viewModel.getPokemon().observe(this, pokemon -> initView(pokemon));
+        viewModel.getPokemon().observe(this, pokemon -> initView(pokemon, viewModel));
         //Once we get the number max of pokemon from the ViewModel or if he is updated we call update the value
         //That allow us to not swipe further than the last one in database
         viewModel.getIdMaxPokemon().observe(this, integer -> idMaxPokemon = integer != null ? integer : 0);
@@ -140,8 +131,9 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
      * Initialise the view with the given pokemon
      *
      * @param pokemon {@link Pokemon} to show
+     * @param viewModel
      */
-    private void initView(Pokemon pokemon) {
+    private void initView(Pokemon pokemon, PokemonViewModel viewModel) {
         if(pokemon != null) {
             //To be able to use the Shared element we need to disable animation from Glide
             RequestOptions options = new RequestOptions()
@@ -174,8 +166,20 @@ public class PokemonDetailFragment extends BaseFragment implements PokemonGestur
             }
 
             //TODO 29) CHANGER L'IMAGE DE LA POKEBALL EN FONCTION DE L'ETAT DE CAPTURE DU POKEMON
+            if(pokemon.isCapture()){
+                Glide.with(getContext()).load(R.drawable.ic_launcher_pokeball).into(iv_detail);
+            }else {
+                Glide.with(getContext()).load(R.drawable.ic_launcher_pokeball_empty).into(iv_detail);
+            }
             //TODO 30) RAJOUTER UN LISTENER SUR L'IMAGE DE LA POKEBALL EST ACTIVER LA CAPTURE DU POKEMON AVEC LE viewModel
+            iv_detail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewModel.capture(pokemon);
+                }
+            });
             //TODO 31) TESTER LA CAPTURE DU POKEMON ET VERIFIER QUE LA POKEBALL CHANGE BIEN DE VIDE A PLEINE (UNE CERTAINE LATENCE PEUT ETRE REMARQUER)
+            //c'est OK ! :D
         }
     }
 

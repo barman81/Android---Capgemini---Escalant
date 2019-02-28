@@ -31,7 +31,7 @@ public class BaseActivity extends AppCompatActivity {
     //TODO 2) AJOUTER UNE CONSTANTE QUI SERVIRA DE CLE POUR RECUPERER LA DERNIERE RECHERCHE EFFECTUE
     private static final String  KEY_DERNIERE_RECHERCHE = "KEY_DERNIERE_RECHERCHE";
     //TODO 3) AJOUTER UNE VARIABLE QUI STOCKERA LA DERNIERER RECHERCHE EFFECTUE
-    private static String derniereRecherche;
+    private String derniereRecherche;
 
     @Inject
     protected NavigationManager navigationManager;
@@ -76,6 +76,8 @@ public class BaseActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                navigationManager.startPokemonList(null,s);
+                derniereRecherche = s;
                 return false;
             }
 
@@ -88,7 +90,25 @@ public class BaseActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        searchItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                searchView.setQuery(derniereRecherche,true);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                BaseActivity.this.derniereRecherche = null;
+                return true;
+            }
+        });
         //TODO 12) RETOURNER A LA FIN DE LA METHODE super.onCreateOptionMenu(menu)
+        if(derniereRecherche != null && !derniereRecherche.isEmpty()){
+            searchItem.expandActionView();
+            searchView.setQuery(derniereRecherche,true);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -98,7 +118,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //TODO 18) DANS LA METHODE onSaveInstanceState SAUVEGARDER LA REQUETE EN COURS
-        outState.putString(KEY_DERNIERE_RECHERCHE, derniereRecherche);
+        outState.putCharSequence(KEY_DERNIERE_RECHERCHE, derniereRecherche);
         super.onSaveInstanceState(outState);
     }
 
@@ -107,10 +127,10 @@ public class BaseActivity extends AppCompatActivity {
     //TODO 19) OVERRIDE LA METHODE onRestoreInstanceState
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState, PersistableBundle persistentState) {
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
         //TODO 20) DANS LA METHODE onRestoreInstanceState RECUPERER LA REQUETE PRECEDEMMENT SAUVEGARDER LA DANS LA VARIABLE DE CLASSE
-        derniereRecherche = savedInstanceState.getString(KEY_DERNIERE_RECHERCHE);
-        super.onRestoreInstanceState(savedInstanceState, persistentState);
+        super.onRestoreInstanceState(savedInstanceState);
+        derniereRecherche = (String) savedInstanceState.getCharSequence(KEY_DERNIERE_RECHERCHE);
     }
 
 
