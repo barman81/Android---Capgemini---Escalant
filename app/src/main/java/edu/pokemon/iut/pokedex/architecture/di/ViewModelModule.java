@@ -39,10 +39,14 @@ public abstract class ViewModelModule {
     @ViewModelKey(PokemonListViewModel.class)
     abstract ViewModel bindsPokemonListViewModel(PokemonListViewModel pokemonListViewModel);
 
-    // TODO 20) AJOUTER UNE METHODE bindsPokemonDetailViewModel POUR PokemonViewModel
+    /**
+     * Returns a ViewModel to manipulate a single Pokemon
+     *
+     * @param pokemonViewModel actual implementation of abstract class {@link ViewModel}
+     * @return an instance of abstract class {@link ViewModel}
+     */
     @Binds
     @IntoMap
     @ViewModelKey(PokemonViewModel.class)
-    abstract ViewModel bindsPokemonDetailViewModel(PokemonViewModel pokemonViewModel);
-
+    abstract ViewModel bindsPokemonViewModel(PokemonViewModel pokemonViewModel);
 }

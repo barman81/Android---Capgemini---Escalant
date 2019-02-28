@@ -8,132 +8,151 @@
     android:background="@color/colorAccentLight"
     tools:ignore="Overdraw">
 
-    <!-- TODO 1) INSERER UNE IMAGEVIEW POUR L'IMAGE DU POKEMON -->
     <ImageView
-        android:id="@+id/imagePokemon"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="44dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/iv_pokemon_logo"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/content_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_pokemon_name"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        tools:srcCompat="@drawable/ic_launcher_pokeball" />
 
-
-
-
-    <!-- TODO 2) INSERER UNE TEXTVIEW POUR LE NUMERO DU POKEMON -->
-    <TextView
-        android:id="@+id/txtViewNumPokemon"
-        android:layout_width="159dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="124dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/imagePokemon"
-        app:layout_constraintTop_toTopOf="parent" />
-    <!-- TODO 3) INSERER UNE TEXTVIEW POUR LE NOM DU POKEMON -->
+    <!-- TODO 26) RAJOUTER UNE CIRCLEVIEW (SUR LE MEME MODEL QUE pokemon_line_view) AVEC UNE IMAGE VIEW DEDANS AFIN DE POUVOIR CAPTURE LE POKEMON, POSITIONNER LA PAR DESSUS L'IMAGE DU POKEMON -->
 
     <TextView
-        android:id="@+id/txtViewNomPokemon"
-        android:layout_width="154dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="@+id/txtViewNumPokemon"
-        app:layout_constraintTop_toBottomOf="@+id/txtViewNumPokemon" />
-    <!-- TODO 4) INSERER UN CONSTRAINTLAYOUT QUI CONTIENDRA LES DETAILS DU POKEMON -->
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/cl_detailPokemon"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="60dp"
+        android:id="@+id/tv_pokemon_numero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_white_corner_round"
+        android:elevation="8dp"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagePokemon">
-        <!-- TODO 5) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'TYPES' -->
-        <!-- TODO 6) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LE TYPE DU POKEMON-->
-        <!-- TODO 7) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'BASE EXP' -->
-        <TextView
-            android:id="@+id/txtViewLibelleBaseExp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="31dp"
-            android:text="@string/base_exp"
-            app:layout_constraintStart_toStartOf="@+id/txtViewLibelleTypes"
-            app:layout_constraintTop_toBottomOf="@+id/txtViewLibelleTypes" />
-        <!-- TODO 8) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LA BASE D'EXP DU POKEMON-->
-        <TextView
-            android:id="@+id/txtViewBaseEx"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toEndOf="@+id/txtViewLibelleBaseExp"
-            app:layout_constraintTop_toBottomOf="@+id/llTypePokemon"
-            tools:text="0" />
-        <!-- TODO 9) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'HT' -->
-        <TextView
-            android:id="@+id/txtViewLibelleTaille"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="31dp"
-            android:text="@string/ht"
-            app:layout_constraintStart_toStartOf="@+id/txtViewLibelleTypes"
-            app:layout_constraintTop_toBottomOf="@+id/txtViewLibelleBaseExp" />
-        <!-- TODO 10) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LA TAILLE DU POKEMON-->
+        app:layout_constraintTop_toTopOf="@+id/iv_pokemon_logo"
+        tools:text="No. 1" />
+
+    <TextView
+        android:id="@+id/tv_pokemon_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_white_corner_round"
+        android:elevation="8dp"
+        android:textAllCaps="true"
+        android:textAppearance="@android:style/TextAppearance.Material.Large"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_pokemon_numero"
+        tools:text="Bulbasaur" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_pokemon_detail_subinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_white_corner_round"
+        android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_pokemon_logo">
 
         <TextView
-            android:id="@+id/txtViewTaille"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="31dp"
-            android:text="110"
-            app:layout_constraintStart_toEndOf="@+id/txtViewLibelleTaille"
-            app:layout_constraintTop_toBottomOf="@+id/txtViewLibelleBaseExp" />
-        <!-- TODO 11) DANS LE SECOND CONSTRAINT LAYOUT AJOUTER UN LIBELLE 'WT' -->
-        <TextView
-            android:id="@+id/txtViewLibellePoids"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:text="@string/wt"
-            app:layout_constraintStart_toStartOf="@+id/txtViewLibelleTypes"
-            app:layout_constraintTop_toBottomOf="@+id/txtViewLibelleTaille" />
-        <!-- TODO 12) EN FACE DU LIBELLE 'TYPES' AJOUTER UNE TEXTVIEW POUR LE POIDS DU POKEMON-->
-        <TextView
-            android:id="@+id/txtViewPoids"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="34dp"
-            android:layout_marginTop="22dp"
-            android:text="80"
-            app:layout_constraintStart_toEndOf="@+id/txtViewLibellePoids"
-            app:layout_constraintTop_toBottomOf="@+id/txtViewTaille" />
-
-        <TextView
-            android:id="@+id/txtViewLibelleTypes"
+            android:id="@+id/tv_pokemon_type_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/types"
+            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Types :" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/llTypePokemon"
-            android:layout_width="182dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="16dp"
+            android:id="@+id/ll_pokemon_types"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:orientation="vertical"
-            app:layout_constraintStart_toEndOf="@+id/txtViewLibelleTypes"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_pokemon_type_label">
 
         </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/tv_pokemon_base_exp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_pokemon_base_exp_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_pokemon_base_exp_label"
+            tools:text="150 exp" />
+
+        <TextView
+            android:id="@+id/tv_pokemon_base_exp_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/base_exp"
+            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+            app:layout_constraintStart_toStartOf="@+id/tv_pokemon_type_label"
+            app:layout_constraintTop_toTopOf="@+id/barrier" />
+
+        <TextView
+            android:id="@+id/tv_pokemon_height_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/ht"
+            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+            app:layout_constraintStart_toStartOf="@+id/tv_pokemon_base_exp_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pokemon_base_exp_label" />
+
+        <TextView
+            android:id="@+id/tv_pokemon_height"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_pokemon_height_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_pokemon_height_label"
+            tools:text="20 cm" />
+
+        <TextView
+            android:id="@+id/tv_pokemon_weight_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/wt"
+            android:textAppearance="@android:style/TextAppearance.Material.Subhead"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_pokemon_height_label"
+            app:layout_constraintTop_toBottomOf="@+id/tv_pokemon_height_label" />
+
+        <TextView
+            android:id="@+id/tv_pokemon_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_pokemon_weight_label"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_pokemon_weight_label"
+            tools:text="20 kg" />
+
+
+        <android.support.constraint.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="ll_pokemon_types,tv_pokemon_type_label" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
